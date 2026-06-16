@@ -525,7 +525,43 @@
 
     #toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* ── ERROR ── */
+    /* ── LAYOUT BLOCKS ── */
+    .layout-block {
+      background: var(--sand);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(201,145,58,.12);
+    }
+
+    .layout-img-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .layout-img-wrap { margin-bottom: 16px; }
+
+    .layout-text-area {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px dashed rgba(201,145,58,.25);
+    }
+
+    .layout-divider {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      padding: 12px 0;
+      opacity: .5;
+    }
+
+        /* ── ERROR ── */
     .error-box {
       background: #fff5f5;
       border: 1px solid #fca5a5;
@@ -629,22 +665,44 @@
       <div class="destination-badge" id="resultBadge">—</div>
     </div>
 
-    <!-- IMAGE CARD -->
-    <div class="card" id="imageCard">
-      <div class="card-title">🖼️ 추천 이미지</div>
-      <div id="imageDisplay"></div>
-    </div>
-
-    <!-- BLOG TEXT CARD -->
+    <!-- 레이아웃 미리보기 카드 -->
     <div class="card">
       <div class="section-row">
-        <div class="block-label">📝 블로그 텍스트</div>
-        <button class="btn-copy" id="copyTextBtn" onclick="copyText()">
-          📋 복사
-        </button>
+        <div class="card-title" style="margin-bottom:0">📐 블로그 레이아웃 미리보기</div>
+        <button class="btn-copy" id="copyAllBtn" onclick="copyAll()">📋 전체 복사</button>
       </div>
-      <div class="text-content" id="blogText">—</div>
-      <div class="char-count" id="charCount">0자</div>
+      <p style="font-size:12px;color:var(--muted);margin:8px 0 20px;">이미지 → 텍스트 순서로 배치한 레이아웃이에요. 전체 복사 후 블로그에 붙여넣기 하세요.</p>
+
+      <!-- 섹션 1 -->
+      <div class="layout-block">
+        <div class="layout-img-label">📷 추천 이미지 1</div>
+        <div class="layout-img-wrap" id="imgWrap1"></div>
+        <div class="layout-text-area">
+          <div class="section-row" style="margin-bottom:10px">
+            <div class="block-label" style="margin-bottom:0">✏️ 본문 1단락</div>
+            <button class="btn-copy" id="copyS1Btn" onclick="copySection(1)">📋 복사</button>
+          </div>
+          <div class="text-content" id="section1Text">—</div>
+          <div class="char-count" id="charCount1">0자</div>
+        </div>
+      </div>
+
+      <div class="layout-divider">✂ - - - - - - - - - - - - - - -</div>
+
+      <!-- 섹션 2 -->
+      <div class="layout-block">
+        <div class="layout-img-label">📷 추천 이미지 2</div>
+        <div class="layout-img-wrap" id="imgWrap2"></div>
+        <div class="layout-text-area">
+          <div class="section-row" style="margin-bottom:10px">
+            <div class="block-label" style="margin-bottom:0">✏️ 본문 2단락</div>
+            <button class="btn-copy" id="copyS2Btn" onclick="copySection(2)">📋 복사</button>
+          </div>
+          <div class="text-content" id="section2Text">—</div>
+          <div class="char-count" id="charCount2">0자</div>
+        </div>
+      </div>
+
     </div>
 
     <!-- HASHTAG CARD -->
@@ -774,28 +832,32 @@
 
 [글쓰기 규칙 - 반드시 지킬 것]
 - 실제로 그 장소를 직접 다녀온 사람처럼 1인칭 시점으로 쓸 것
-- ~했다, ~이었다 같은 과거형 일기 문체 사용
+- 구어체 위주로 쓸 것. "~했어", "~더라", "~인데", "~거든" 같은 말투 자연스럽게 사용
 - 거창한 수식어나 과장된 감탄 표현 금지 (황홀한, 눈부신, 형언할 수 없는 등 사용 안 함)
-- 그 장소에서 실제로 겪을 법한 소소한 디테일 포함 (예: 줄 서서 기다린 것, 날씨가 애매했던 것, 생각보다 작았던 것 등)
-- 문장은 짧고 담백하게. 호흡이 자연스럽게 끊기는 구어체 허용
+- 그 장소에서 실제로 겪을 법한 소소한 디테일 포함 (줄 서서 기다린 것, 날씨, 가격, 사람 많았던 것 등)
+- 문장은 짧고 담백하게. 한 문장씩 끊어서 읽기 편하게
 - 결말을 억지로 예쁘게 마무리하지 말 것. 그냥 일상처럼 끝내도 됨
 - 이모지는 1~2개만, 억지로 넣지 말고 어울릴 때만
-- 500자 이내
+- 전체 글은 반드시 900자~1000자 사이로 작성할 것
+
+글은 이미지 2장에 맞춰 2개 단락으로 나눠서 써줘.
+- section1: 첫 번째 이미지에 어울리는 내용 (도착/첫인상/장소 소개) - 400~500자
+- section2: 두 번째 이미지에 어울리는 내용 (음식/세부경험/느낀점) - 400~500자
 
 아래 JSON 형식으로만 반환하세요. 다른 텍스트는 절대 포함하지 마세요.
 
 {
-  "blogText": "위 규칙을 따른 자연스러운 여행 기록문",
+  "section1": "첫 번째 단락 텍스트 (400~500자)",
+  "section2": "두 번째 단락 텍스트 (400~500자)",
   "imageUrls": [
-    "이 여행지 랜드마크/풍경의 실제 공개 이미지 URL 1개 (https:// 로 시작)",
-    "두 번째 이미지 URL",
-    "세 번째 이미지 URL"
+    "이 여행지 랜드마크/풍경의 실제 공개 이미지 URL (https://로 시작)",
+    "두 번째 여행지 이미지 URL (https://로 시작)"
   ],
   "hashtags": ["#해시태그1", "#해시태그2", "최소 12개 이상 한국어+영어 혼합"]
 }
 
 추가 주의사항:
-- imageUrls는 https://로 시작하는 실제 접근 가능한 URL만
+- imageUrls는 https://로 시작하는 실제 접근 가능한 URL만, 2개만 제공
 - hashtags는 최소 12개, 여행지 이름, 분위기, 음식, 액티비티 관련 태그 포함
 - 반드시 유효한 JSON만 반환`;
   }
@@ -837,13 +899,20 @@
   function renderResults(destination, data) {
     document.getElementById('resultBadge').textContent = destination;
 
-    // ─ Blog Text ─
-    const text = data.blogText || '텍스트 생성에 실패했습니다.';
-    document.getElementById('blogText').textContent = text;
-    document.getElementById('charCount').textContent = `${text.length}자`;
+    // ─ Section 1 ─
+    const s1 = data.section1 || '첫 번째 단락 생성에 실패했습니다.';
+    document.getElementById('section1Text').textContent = s1;
+    document.getElementById('charCount1').textContent = `${s1.length}자`;
+
+    // ─ Section 2 ─
+    const s2 = data.section2 || '두 번째 단락 생성에 실패했습니다.';
+    document.getElementById('section2Text').textContent = s2;
+    document.getElementById('charCount2').textContent = `${s2.length}자`;
 
     // ─ Images ─
-    renderImages(data.imageUrls || []);
+    const urls = data.imageUrls || [];
+    renderImageBlock('imgWrap1', urls[0] || null, 1);
+    renderImageBlock('imgWrap2', urls[1] || null, 2);
 
     // ─ Hashtags ─
     const tags = data.hashtags || [];
@@ -859,61 +928,50 @@
     showResults();
   }
 
-  function renderImages(urls) {
-    const container = document.getElementById('imageDisplay');
+  function renderImageBlock(containerId, url, num) {
+    const container = document.getElementById(containerId);
     container.innerHTML = '';
 
-    if (!urls || urls.length === 0) {
-      container.innerHTML = '<p style="color:var(--muted);font-size:14px;">이미지를 불러올 수 없습니다.</p>';
+    if (!url) {
+      container.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:12px 0;">이미지 ${num} URL을 불러올 수 없습니다.</p>`;
       return;
     }
 
-    // Try to display the first image
-    const img = document.createElement('div');
-    img.className = 'image-section';
-    img.innerHTML = `
-      <img
-        src="${escHtml(urls[0])}"
-        alt="여행지 이미지"
-        onerror="this.parentElement.style.display='none'"
-        loading="lazy"
-      />
-      <div class="image-overlay">
-        <span class="image-credit">📷 여행지 이미지</span>
-        <a class="btn-img-link" href="${escHtml(urls[0])}" target="_blank" rel="noopener">
-          원본 보기 ↗
-        </a>
+    container.innerHTML = `
+      <div class="image-section">
+        <img src="${escHtml(url)}" alt="여행지 이미지 ${num}"
+          onerror="this.parentElement.classList.add('img-error')" loading="lazy" />
+        <div class="image-overlay">
+          <span class="image-credit">📷 이미지 ${num}</span>
+          <a class="btn-img-link" href="${escHtml(url)}" target="_blank" rel="noopener">원본 보기 ↗</a>
+        </div>
       </div>
-    `;
-    container.appendChild(img);
-
-    // Show all URLs as links
-    const list = document.createElement('div');
-    list.className = 'image-list';
-    list.style.marginTop = '12px';
-
-    urls.forEach((url, i) => {
-      const a = document.createElement('a');
-      a.className = 'image-link-item';
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.innerHTML = `
-        <span class="img-icon">🖼️</span>
-        <span style="font-size:12px;color:var(--ink);min-width:60px;">이미지 ${i + 1}</span>
+      <a class="image-link-item" href="${escHtml(url)}" target="_blank" rel="noopener noreferrer" style="margin-top:8px">
+        <span class="img-icon">🔗</span>
         <span class="img-url">${escHtml(url)}</span>
         <span style="font-size:11px;color:var(--muted);">↗</span>
-      `;
-      list.appendChild(a);
-    });
-
-    container.appendChild(list);
+      </a>
+    `;
   }
 
   /* ── COPY FUNCTIONS ── */
-  function copyText() {
-    const text = document.getElementById('blogText').textContent;
-    copyToClipboard(text, 'copyTextBtn', '📝 블로그 텍스트');
+  function copySection(num) {
+    const id = num === 1 ? 'section1Text' : 'section2Text';
+    const btnId = num === 1 ? 'copyS1Btn' : 'copyS2Btn';
+    const text = document.getElementById(id).textContent;
+    copyToClipboard(text, btnId, `✏️ ${num}단락`);
+  }
+
+  function copyAll() {
+    const s1 = document.getElementById('section1Text').textContent;
+    const s2 = document.getElementById('section2Text').textContent;
+    const tags = [...document.querySelectorAll('#hashtagsWrap .tag')].map(t => t.textContent).join(' ');
+    const full = `${s1}
+
+${s2}
+
+${tags}`;
+    copyToClipboard(full, 'copyAllBtn', '📋 전체 내용');
   }
 
   function copyTags() {
